@@ -106,17 +106,17 @@ Create a new yaml file to contain the pod definition. Use whatever editor you li
 my-pod.yml:
 
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-  labels:
-    app: myapp
-spec:
-  containers:
-  - name: myapp-container
-    image: busybox
-    command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: my-pod
+			  labels:
+				app: myapp
+			spec:
+			  containers:
+			  - name: myapp-container
+				image: busybox
+				command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
 
 
 
