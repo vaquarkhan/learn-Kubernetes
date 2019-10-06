@@ -1,5 +1,7 @@
 # learn-Kubernetes
 
+-  https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/
+
 
 First, set up the Docker and Kubernetes repositories:
 
@@ -70,3 +72,20 @@ You should see all three servers with a status of Ready:
         wboyd1c.mylabserver.com   Ready    master   54m   v1.13.4
         wboyd2c.mylabserver.com   Ready    <none>   49m   v1.13.4
         wboyd3c.mylabserver.com   Ready    <none>   49m   v1.13.4
+
+
+----------------------------------------------------------------
+
+
+            kubectl api-resources -o name
+
+            kubectl get pods -n kube-system
+
+            kubectl get nodes
+
+            kubectl get nodes $node_name
+
+            kubectl get nodes $node_name -o yaml
+
+            kubectl describe node $node_name
+
