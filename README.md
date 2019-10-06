@@ -375,3 +375,342 @@ Check the log once more. You should see the message from the file.
  
 
 
+------------------------------------------
+
+Kubernetes is a powerful tool for managing and utilizing available resources to run containers. Resource requests and limits provide a great deal of control over how resources will be allocated. In this lesson, we will talk about what resource requests and limits do, and also demonstrate how to set resource requests and limits for a container.
+
+
+- https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container
+
+Specify resource requests and resource limits in the container spec like this:
+
+		apiVersion: v1
+		kind: Pod
+		metadata:
+		  name: my-resource-pod
+		spec:
+		  containers:
+		  - name: myapp-container
+			image: busybox
+			command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+			resources:
+			  requests:
+				memory: "64Mi"
+				cpu: "250m"
+			  limits:
+				memory: "128Mi"
+				cpu: "500m"
+
+
+
+-------------------------------------------------------
+
+One of the challenges in managing a complex application infrastructure is ensuring that sensitive data remains secure. It is always important to store sensitive data, such as tokens, passwords, and keys, in a secure, encrypted form. In this lesson, we will talk about Kubernetes secrets, a way of securely storing data and providing it to containers. We will also walk through the process of creating a simple secret, and passing the sensitive data to a container as an environment variable.
+
+
+- https://kubernetes.io/docs/concepts/configuration/secret/
+
+Create a secret using a yaml definition like this. It is a good idea to delete the yaml file containing the sensitive data after the secret object has been created in the cluster.
+
+		apiVersion: v1
+		kind: Secret
+		metadata:
+		  name: my-secret
+		stringData:
+		  myKey: myPassword
+
+
+Once a secret is created, pass the sensitive data to containers as an environment variable:
+
+
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: my-secret-pod
+			spec:
+			  containers:
+			  - name: myapp-container
+				image: busybox
+				command: ['sh', '-c', "echo Hello, Kubernetes! && sleep 3600"]
+				env:
+				- name: MY_PASSWORD
+				  valueFrom:
+					secretKeyRef:
+					  name: my-secret
+					  key: myKey
+
+
+
+-------------------------------------------------
+
+
+Kubernetes allows containers running within the cluster to interact with the Kubernetes API. This opens the door to some powerful forms of automation. But in order to ensure that this gets done securely, it is a good idea to use specialized ServiceAccounts with restricted permissions to allow containers to access the API. In this lesson, we will discuss ServiceAccounts as they pertain to pod configuration, and we will walk through the process of specifying which ServiceAccount a pod will use to connect to the Kubernetes API.
+
+
+https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
+
+Creating a ServiceAccount looks like this:
+
+
+
+          kubectl create serviceaccount my-serviceaccount
+
+
+Use the serviceAccountName attribute in the pod spec to specify which ServiceAccount the pod should use:
+
+
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: my-serviceaccount-pod
+			spec:
+			  serviceAccountName: my-serviceaccount
+			  containers:
+			  - name: myapp-container
+				image: busybox
+				command: ['sh', '-c', "echo Hello, Kubernetes! && sleep 3600"]
+
+
+
+---------------------------------------------
+
+Multi-container pods provide an opportunity to enhance containers with helper containers that provide additional functionality. This lesson covers the basics of what multi-container pods are and how they are created. It also discusses the primary ways that containers can interact with each other within the same pod, as well as the three main multi-container pod design patterns: sidecar, ambassador, and adapter.
+
+Be sure to check out the hands-on labs for this course (including the practice exam) to get some hands-on experience with implementing multi-container pods.
+
+https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-sidecar-container-with-the-logging-agent
+https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/
+https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/
+
+
+Here is the YAML used to create a simple multi-container pod in the video:
+
+
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: multi-container-pod
+			spec:
+			  containers:
+			  - name: nginx
+				image: nginx:1.15.8
+				ports:
+				- containerPort: 80
+			  - name: busybox-sidecar
+				image: busybox
+				command: ['sh', '-c', 'while true; do sleep 30; done;']
+
+
+------------------------------------------
+
+Kubernetes is often able to detect problems with containers and respond appropriately without the need for specialized configuration. But sometimes we need additional control over how Kubernetes determines container status. Kubernetes probes provide the ability to customize how Kubernetes detects the status of containers, allowing us to build more sophisticated mechanisms for managing container health. In this lesson, we discuss liveness and readiness probes in Kubernetes, and demonstrate how to create and configure them.
+
+
+
+https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+
+
+Here is a pod with a liveness probe that uses a command:
+
+my-liveness-pod.yml:
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: my-liveness-pod
+			spec:
+			  containers:
+			  - name: myapp-container
+				image: busybox
+				command: ['sh', '-c', "echo Hello, Kubernetes! && sleep 3600"]
+				livenessProbe:
+				  exec:
+					command:
+					- echo
+					- testing
+				  initialDelaySeconds: 5
+				  periodSeconds: 5
+
+
+
+Here is a pod with a readiness probe that uses an http request:
+
+my-readiness-pod.yml:
+
+
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: my-readiness-pod
+			spec:
+			  containers:
+			  - name: myapp-container
+				image: nginx
+				readinessProbe:
+				  httpGet:
+					path: /
+					port: 80
+				  initialDelaySeconds: 5
+				  periodSeconds: 5
+
+
+
+----------------------------------------------
+
+When managing containers, obtaining container logs is sometimes necessary in order to gain insight into what is going on inside a container. Kubernetes offers an easy way to view and interact with container logs using the kubectl logs command. In this lesson, we discuss container logs and demonstrate how to access them using kubectl logs.
+
+
+
+https://kubernetes.io/docs/concepts/cluster-administration/logging/
+
+
+A sample pod that generates log output every second:
+
+			apiVersion: v1
+			kind: Pod
+			metadata:
+			  name: counter
+			spec:
+			  containers:
+			  - name: count
+				image: busybox
+				args: [/bin/sh, -c, 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
+
+
+
+Get the container's logs:
+
+
+
+         kubectl logs counter
+	 
+	 
+For a multi-container pod, specify which container to get logs for using the -c flag:
+
+
+          kubectl logs <pod name> -c <container name>
+
+
+Save container logs to a file:
+
+       kubectl logs counter > counter.log
+       
+       
+-----------------------------------
+
+Monitoring is an important part of managing any application infrastructure. In this lesson, we will discuss how to view the resource usage of pods and nodes using the kubectl top command.
+
+https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/
+
+
+Here are some sample pods that can be used to test kubectl top. They are designed to use approximately 300m and 100m CPU, respectively.
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-consumer-big
+		spec:
+		  containers:
+		  - name: resource-consumer
+			image: gcr.io/kubernetes-e2e-test-images/resource-consumer:1.4
+			resources:
+			  requests:
+				cpu: 500m
+				memory: 128Mi
+		  - name: busybox-sidecar
+			image: radial/busyboxplus:curl
+			command: [/bin/sh, -c, 'until curl localhost:8080/ConsumeCPU -d "millicores=300&durationSec=3600"; do sleep 5; done && sleep 3700']
+
+--	
+		apiVersion: v1
+		kind: Pod
+		metadata:
+		  name: resource-consumer-small
+		spec:
+		  containers:
+		  - name: resource-consumer
+			image: gcr.io/kubernetes-e2e-test-images/resource-consumer:1.4
+			resources:
+			  requests:
+				cpu: 500m
+				memory: 128Mi
+		  - name: busybox-sidecar
+			image: radial/busyboxplus:curl
+			command: [/bin/sh, -c, 'until curl localhost:8080/ConsumeCPU -d "millicores=100&durationSec=3600"; do sleep 5; done && sleep 3700']
+
+	
+Here are the commands used in the lesson to view resource usage data in the cluster:
+
+		kubectl top pods
+		kubectl top pod resource-consumer-big
+		kubectl top pods -n kube-system
+		kubectl top nodes
+
+
+
+------------------------------------
+
+Problems will occur in any system, and Kubernetes provides some great tools to help locate and fix problems when they occur within a cluster. In this lesson, we will go through the process of debugging an issue in Kubernetes. We will use our knowledge of kubectl get and kubectl describe to locate a broken pod, and then explore various ways of editing Kubernetes objects to fix issues.
+
+
+
+
+https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/
+https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/
+https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/
+
+
+
+Exploring the cluster to locate the problem
+
+		kubectl get pods
+
+		kubectl get namespace
+
+		kubectl get pods --all-namespaces
+
+		kubectl describe pod nginx -n nginx-ns
+		
+		
+Fixing the broken image name
+Edit the pod:
+
+		
+		kubectl edit pod nginx -n nginx-ns
+
+Change the container image to nginx:1.15.8.
+
+Exporting a descriptor to edit and re-create the pod.
+Export the pod descriptor and save it to a file:
+
+		kubectl get pod nginx -n nginx-ns -o yaml --export > nginx-pod.yml
+
+		Add this liveness probe to the container spec:
+
+			livenessProbe:
+			  httpGet:
+				path: /
+				port: 80
+
+Delete the pod and recreate it using the descriptor file. Be sure to specify the namespace:
+
+		kubectl delete pod nginx -n nginx-ns
+
+		kubectl apply -f nginx-pod.yml -n nginx-ns
+
+
+
+
+
+
+
+
+
