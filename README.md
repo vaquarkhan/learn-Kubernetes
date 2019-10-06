@@ -89,3 +89,53 @@ You should see all three servers with a status of Ready:
 
             kubectl describe node $node_name
 
+-------------------------------------------------------------
+
+Pods are one of the most essential Kubernetes object types. Most of the orchestration features of Kubernetes are centered around the management of Pods. In this lesson, we will discuss what Pods are and demonstrate how to create a pod. We will also talk about how to edit and delete pods after they are created. The principles discussed in this lesson for managing pods apply to the management of other types of Kubernetes objects as well.
+
+
+- https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/
+
+
+
+Create a new yaml file to contain the pod definition. Use whatever editor you like, but we used vi:
+
+      vi my-pod.yml
+      
+      
+my-pod.yml:
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+
+
+
+
+Create a pod from the yaml definition file:
+
+        kubectl create -f my-pod.yml
+        
+Edit a pod by updating the yaml definiton and re-applying it:
+
+      kubectl apply -f my-pod.yml
+      
+You can also edit a pod like this:
+
+       kubectl edit pod my-pod
+       
+You can delete a pod like this:
+
+     kubectl delete pod my-pod
+     
+     
+-----------------------------------------------------
