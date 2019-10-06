@@ -181,3 +181,7 @@ kubectl describe pod my-ns-pod -n my-ns
 
 
 -------------------------------------------
+- https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
+
+
+
