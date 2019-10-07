@@ -489,8 +489,8 @@ Once a secret is created, pass the sensitive data to containers as an environmen
 Kubernetes allows containers running within the cluster to interact with the Kubernetes API. This opens the door to some powerful forms of automation. But in order to ensure that this gets done securely, it is a good idea to use specialized ServiceAccounts with restricted permissions to allow containers to access the API. In this lesson, we will discuss ServiceAccounts as they pertain to pod configuration, and we will walk through the process of specifying which ServiceAccount a pod will use to connect to the Kubernetes API.
 
 
-https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+- https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+- https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 
 
 Creating a ServiceAccount looks like this:
@@ -523,9 +523,9 @@ Multi-container pods provide an opportunity to enhance containers with helper co
 
 Be sure to check out the hands-on labs for this course (including the practice exam) to get some hands-on experience with implementing multi-container pods.
 
-https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-sidecar-container-with-the-logging-agent
-https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/
-https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/
+- https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-sidecar-container-with-the-logging-agent
+- https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume/
+- https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/
 
 
 Here is the YAML used to create a simple multi-container pod in the video:
@@ -553,8 +553,8 @@ Kubernetes is often able to detect problems with containers and respond appropri
 
 
 
-https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
-https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+- https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+- https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 
 
 Here is a pod with a liveness probe that uses a command:
@@ -704,9 +704,9 @@ Problems will occur in any system, and Kubernetes provides some great tools to h
 
 
 
-https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/
-https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/
-https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/
+- https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/
+- https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/
+- https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/
 
 
 
@@ -754,8 +754,8 @@ Delete the pod and recreate it using the descriptor file. Be sure to specify the
 Kubernetes labels provide a way to attach custom, identifying information to your objects. Selectors can then be used to filter objects using label data as criteria. Annotations, on the other hand, offer a more freeform way to attach useful but non-identifying metadata. In this lesson, we will discuss labels, selectors, and annotations. We will also demonstrate how to use them in a cluster.
 
 
-https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+- https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+- https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 
 -------------------------
 
@@ -763,7 +763,7 @@ Deployments provide a variety of features to help you automatically manage group
 
 
 
-https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+- https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 
 You can explore and manage deployments using the same kubectl commands you would use for other object types.
@@ -783,8 +783,8 @@ You can explore and manage deployments using the same kubectl commands you would
 
 One powerful feature of Kubernetes deployments is the ability to perform rolling updates and rollbacks. These allow you to push out new versions without incurring downtime, and they allow you to quickly return to a previous state in order to recover from problems that may arise when deploying changes. In this lesson, we will discuss rolling updates and rollback, and we will demonstrate the process of performing them on a deployment in the cluster.
 
-https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment
+- https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
+- https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment
 
 --------------------------------
 
@@ -819,7 +819,7 @@ You can get more information about the service with these commands:
 
 From a security perspective, it is often a good idea to place network-level restrictions on any communication between different parts of your infrastructure. NetworkPolicies allow you to restrict and control the network traffic going to and from your pods. In this lesson, we will discuss NetworkPolicies and demonstrate how to create a simple policy to restrict access to a pod.
 
-https://kubernetes.io/docs/concepts/services-networking/network-policies/
+- https://kubernetes.io/docs/concepts/services-networking/network-policies/
 
 
 Get information about NetworkPolicies in the cluster:
