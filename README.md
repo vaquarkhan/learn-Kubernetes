@@ -791,9 +791,12 @@ https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/
 Kubernetes provides the ability to easily run container workloads in a distributed cluster, but not all workloads need to run constantly. With jobs, we can run container workloads until they complete, then shut down the container. CronJobs allow us to do the same, but re-run the workload regularly according to a schedule. In this lesson, we will discuss Jobs and CronJobs and explore how to create and manage them.
 
 Relevant Documentation
-https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
-https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/
+
+- https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+
+- https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
+- https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/
 
 
 
@@ -801,8 +804,9 @@ https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/
 
 Deployments make it easy to create a set of replica pods that can be dynamically scaled, updated, and replaced. However, providing network access to those pods for other components is difficult. Services provide a layer of abstraction that solves this problem. Clients can simply access the service, which dynamically proxies traffic to the current set of replicas. In this lesson, we will discuss services and demonstrate how to create one that exposes a deployment's replica pods.
 
-https://kubernetes.io/docs/concepts/services-networking/service/
-https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/
+- https://kubernetes.io/docs/concepts/services-networking/service/
+
+- https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/
 
 
 You can get more information about the service with these commands:
