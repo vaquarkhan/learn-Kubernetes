@@ -1,5 +1,10 @@
 # learn-Kubernetes
 
+![Alt Text](https://media.licdn.com/dms/image/C4E22AQE-dfyj9bmMVg/feedshare-shrink_1280/0?e=1573084800&v=beta&t=7y8nny9zu3cfZw4RYJmSFYPaY7BquUSN1Eo2LmAuhLY)
+
+
+
+
 -  https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/
 
 
