@@ -708,9 +708,78 @@ Delete the pod and recreate it using the descriptor file. Be sure to specify the
 
 
 
+---------------------------
+
+Kubernetes labels provide a way to attach custom, identifying information to your objects. Selectors can then be used to filter objects using label data as criteria. Annotations, on the other hand, offer a more freeform way to attach useful but non-identifying metadata. In this lesson, we will discuss labels, selectors, and annotations. We will also demonstrate how to use them in a cluster.
+
+
+https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+
+-------------------------
+
+Deployments provide a variety of features to help you automatically manage groups of replica pods. In this lesson, we will discuss what deployments are. We will also create a simple deployment and go through the process of scaling the deployment up and down by changing the number of desired replicas.
 
 
 
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
+
+You can explore and manage deployments using the same kubectl commands you would use for other object types.
+
+			kubectl get deployments
+
+			kubectl get deployment <deployment name>
+
+			kubectl describe deployment <deployment name>
+
+			kubectl edit deployment <deployment name>
+
+			kubectl delete deployment <deployment name>
+
+
+------------------------------
+
+One powerful feature of Kubernetes deployments is the ability to perform rolling updates and rollbacks. These allow you to push out new versions without incurring downtime, and they allow you to quickly return to a previous state in order to recover from problems that may arise when deploying changes. In this lesson, we will discuss rolling updates and rollback, and we will demonstrate the process of performing them on a deployment in the cluster.
+
+https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
+https://v1-12.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment
+
+--------------------------------
+
+Kubernetes provides the ability to easily run container workloads in a distributed cluster, but not all workloads need to run constantly. With jobs, we can run container workloads until they complete, then shut down the container. CronJobs allow us to do the same, but re-run the workload regularly according to a schedule. In this lesson, we will discuss Jobs and CronJobs and explore how to create and manage them.
+
+Relevant Documentation
+https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/
+
+
+
+-------------------------------------
+
+Deployments make it easy to create a set of replica pods that can be dynamically scaled, updated, and replaced. However, providing network access to those pods for other components is difficult. Services provide a layer of abstraction that solves this problem. Clients can simply access the service, which dynamically proxies traffic to the current set of replicas. In this lesson, we will discuss services and demonstrate how to create one that exposes a deployment's replica pods.
+
+https://kubernetes.io/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/
+
+
+You can get more information about the service with these commands:
+
+           kubectl get svc
+           kubectl get endpoints my-service
+
+
+------------------------
+
+From a security perspective, it is often a good idea to place network-level restrictions on any communication between different parts of your infrastructure. NetworkPolicies allow you to restrict and control the network traffic going to and from your pods. In this lesson, we will discuss NetworkPolicies and demonstrate how to create a simple policy to restrict access to a pod.
+
+https://kubernetes.io/docs/concepts/services-networking/network-policies/
+
+
+Get information about NetworkPolicies in the cluster:
+
+       kubectl get networkpolicies
+       kubectl describe networkpolicy my-network-policy
 
 
