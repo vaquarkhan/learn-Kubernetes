@@ -828,3 +828,12 @@ Get information about NetworkPolicies in the cluster:
        kubectl describe networkpolicy my-network-policy
 
 
+-------------------
+
+- https://github.com/knrt10/kubernetes-basicLearning
+- https://github.com/ajeetraina/kubernetes101
+- https://github.com/ramitsurana/awesome-kubernetes
+- https://github.com/kelseyhightower/intro-to-kubernetes-workshop
+- https://github.com/kubernauts/Kubernetes-Learning-Resources/blob/master/pages/resources.md
+- https://github.com/kubernauts/Kubernetes-Learning-Resources/blob/master/pages/professionals.md
+- 
